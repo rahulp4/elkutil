@@ -75,8 +75,8 @@ public class ExcelReader {
             Row row = rowIterator.next();
         	recordAndDocId++;
         	String jsonString	=	getData4Upload(row);
-        	uploadDocument(jsonString,recordAndDocId);
-            System.out.println();
+        	//uploadDocument(jsonString,recordAndDocId);
+            System.out.println("Object "+jsonString);
         
         }
         while (rowIterator.hasNext()) {
