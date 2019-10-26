@@ -20,7 +20,7 @@ import java.util.List;
 public class ExcelReader {
     public static final String SAMPLE_XLS_FILE_PATH = "./sample-xls-file.xls";
     //public static final String SAMPLE_XLSX_FILE_PATH = "./sample-xlsx-file.xlsx";
-    public static final String SAMPLE_XLSX_FILE_PATH = "D:/knowledgebase/myproject/twilio/documents/DataFull/Test.xlsx";
+    public static final String SAMPLE_XLSX_FILE_PATH = "D:/knowledgebase/myproject/twilio/documents/DataFull/v2ymm.xlsx";
     public static void main(String[] args) throws IOException, InvalidFormatException {
     	int recordAndDocId	=	0;
     	
@@ -75,7 +75,7 @@ public class ExcelReader {
             Row row = rowIterator.next();
         	recordAndDocId++;
         	String jsonString	=	getData4Upload(row);
-        	//uploadDocument(jsonString,recordAndDocId);
+        	uploadDocument(jsonString,recordAndDocId);
             System.out.println("Object "+jsonString);
         
         }
@@ -265,7 +265,7 @@ public class ExcelReader {
     	return jsonString;
     }
     
-    static String baseurlUpload	=	"https://3a7721e6.qb0x.com:30002/ymmv1/_doc/";
+    static String baseurlUpload	=	"https://3a7721e6.qb0x.com:30002/ymmv2/_doc/";
     public static void uploadDocument(String jsonString,int docId) {
     	String finalURLWithDocId	= baseurlUpload+docId;
     	String str	=	null;
