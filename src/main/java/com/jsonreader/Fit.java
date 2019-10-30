@@ -12,6 +12,7 @@ public class Fit {
 	public String SystemModel;
 	public String WebDescription;
 	
+	
 	public Fit() {
 		
 	}

@@ -1,5 +1,10 @@
 package com.jsonreader;
-
+//https://www.lkqonline.com/api/catalog/0/productcategory?catalogId=0&name=Category&year=&make=ACURA&model=
+/**
+ * Year = blank
+ * Model = blank
+ * Make	=	"ACURA"
+ */
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,14 +29,16 @@ import com.mongo.MongoClt;
 import com.mongodb.DuplicateKeyException;
 import com.util.ReSTUtil;
 
-public class JsonReader {
-	final static Logger logger = Logger.getLogger(JsonReader.class);
-	private static long GAP_YEARMAKEMODEL	=	20000;//10 Seconds
-	private static long GAP_PARTDETAILS	=	20000;//10 Seconds
+public class JsonReaderNew {
+	final static Logger logger = Logger.getLogger(JsonReaderNew.class);
 
+	private static long GAP_YEARMAKEMODEL	=	3000;//10 Seconds
+	private static long GAP_PARTDETAILS	=	3000;//10 Seconds
+	
+	
 	public MongoClt clt	=	new MongoClt();
 	//public String baseFileDir	=	"D:\\knowledgebase\\myproject\\twilio\\documents\\DataFull\\TestPulledData\\";
-	public String baseFileDir	=	"/var/config/DataPul/vdata2000/";	  
+	public String baseFileDir	=	"/var/config/DataPul/vdata/";	  
   private static String readAll(Reader rd) throws IOException {
     StringBuilder sb = new StringBuilder();
     int cp;
@@ -90,13 +97,13 @@ public class JsonReader {
  }
   
   public static void main(String[] args) throws IOException, JSONException {
-	  if(false) {
+	  if(true) {
 		  String fileName	=	"2010LAND ROVERLR2_11";
 		  String finalFileName	=	StringUtils.remove(fileName, ' ');
 		  String t	=	"2010LEXUSLS600/LS600H/LS600HL";
 		  String newFileName	=	StringUtils.remove(t, '/');
 		  System.out.println(newFileName);
-//		  JsonReader reader	=	new JsonReader();
+//		  JsonReaderNew reader	=	new JsonReaderNew();
 //		  reader.searchLocal("", "", "", "");
 //		  String make="HONDA";
 //		  String year="2010";
@@ -118,7 +125,7 @@ public class JsonReader {
 	  String year="2016";
 	  String model="PILOT";
 	  List<YearMakeModelXLSDTO> yearmakemodelList	=	null;
-	  JsonReader reader	=	new JsonReader();
+	  JsonReaderNew reader	=	new JsonReaderNew();
 	  reader.clt.getConnection("");
 	  logger.info("Initilizing the XLS for year make model");
 	  YearMakeModelReaderFromXLS yearMakeModel	=	new YearMakeModelReaderFromXLS();
@@ -128,11 +135,8 @@ public class JsonReader {
 		  yearmakemodelList	=	yearMakeModel.getYearMakeModelList();
 		  for (YearMakeModelXLSDTO yearMakeModelXLSDTO : yearmakemodelList) {
 				make	=	yearMakeModelXLSDTO.getMake();
-				
-				year	=	yearMakeModelXLSDTO.getYear()+"";
-				//year	=	"";				
 				model	=	yearMakeModelXLSDTO.getModel();
-				//model	=	"";
+				year	=	yearMakeModelXLSDTO.getYear()+"";
 				logger.info("Current Year MAke MOdel "+year+"-"+make+"-"+model);
 				reader.startMain(make, year, model);	
 				intCount++;
@@ -299,7 +303,7 @@ public class JsonReader {
 		  try {
 			  Fit[] fiList	=	data.getFitments_list();
 			  for (Fit fit : fiList) {
-				  getDataRow(data,fit,baseFileName+"_"+fileNameCount,partType,fileNameCount);
+				  getDataRow(data,fit,baseFileName+"_"+fileNameCount,partType);
 				  fileNameCount++;
 			}
 		  } catch (Exception e) {
@@ -308,7 +312,7 @@ public class JsonReader {
 	  }
 	  
   }
-  public void getDataRow(Data data,Fit fit,String fileName,String partType,int fileNameCount){
+  public void getDataRow(Data data,Fit fit,String fileName,String partType){
 	  DataRow dataRow	=	new DataRow();
 	  
 	  String sheetYearStr	=	fit.Year;
@@ -331,14 +335,6 @@ public class JsonReader {
 		  descriptionStr	=	fit.WebDescription;
 	  }
 
-	  
-String type=	data.getType();
-String corePrice	=	data.getCorePrice();
-String price=	data.getPrice();
-
-
-	  fileName	=	sheetYearStr+sheetMakeStr+sheetModelStr+fileNameCount;
-	  
 	  String number	=	data.getNumber();
 	  String interchange	=	data.getInterchange();
 	  String sheetCategory	=	data.getCategory();
@@ -416,17 +412,17 @@ public void saveToFile(DataRow data,String fileName){
   private static String [] fetchPartType(String url) throws IOException, JSONException  {
 
 	  logger.info("Reading fomr URL ..YEAR-MAKE-MODEL - url "+url);  
-  JSONObject json = readJsonFromUrl(url);
+	  JSONObject json = readJsonFromUrl(url);
   
   
-  logger.info("Response for YEAR MAKE MODEL "+json);
-   if(json==null) {
-	String s[]	=	{"",""};
-	return null;
-   } else {
-   JSONArray s= (JSONArray)json.get("data");
-   return toStringArray(s);
-   }
+	  logger.info("Response for YEAR MAKE MODEL "+json);
+	  if(json==null) {
+		  String s[]	=	{"",""};
+		  return null;
+	  } else {
+		  JSONArray s= (JSONArray)json.get("data");
+		  return toStringArray(s);
+	  }
   }
  
 

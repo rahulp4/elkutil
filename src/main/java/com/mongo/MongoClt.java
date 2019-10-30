@@ -7,20 +7,32 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DuplicateKeyException;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
+
+
+
+//db.createCollection("MASTER_DATA_SEARCH")
+//db.MASTER_DATA_SEARCH.createIndex( {'year':1,'make': 1,'model':1,'interchange':1},{unique: true} )
 public class MongoClt {
 	public MongoClient mongo = null;
 	public static void main(String[] str) {
 		MongoClt clt	=	new MongoClt();
 		clt.getConnection("");
 		DataRow row	=	new DataRow();
-		clt.insertDoc(row);
+		try {
+			clt.insertDoc(row);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void insertDoc(DataRow dataRow) {
+
+	
+	public void insertDoc(DataRow dataRow) throws Exception {
 		try {
 			DB db = mongo.getDB("cloudsearch");
 			DBCollection table = db.getCollection("MASTER_DATA_SEARCH");
@@ -36,9 +48,17 @@ public class MongoClt {
 			document.put("yearmakemodle_desc", dataRow.getSheetYearmakemodel_desc());
 			document.put("year", dataRow.getSheetYearStr());
 			
+			document.put("type", dataRow.getType());
+			document.put("corePrice", dataRow.getCorePrice());
+			document.put("price", dataRow.getPrice());
+			
+
+			
 			table.insert(document);
 
-		} catch (Exception e) {
+		} catch (DuplicateKeyException e) {
+			throw e;
+	    } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

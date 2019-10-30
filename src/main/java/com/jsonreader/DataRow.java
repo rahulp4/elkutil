@@ -8,7 +8,8 @@ public class DataRow {
 				+ sheetModelStr + ", sheetCategory:" + sheetCategory + ", sheetYearmakemodel_desc:"
 				+ sheetYearmakemodel_desc + ", sheetYearmakemodel:" + sheetYearmakemodel + ", sheetInput:" + sheetInput
 				+ ", sheetSubCategory:" + sheetSubCategory + ", sheetSubCat2:" + sheetSubCat2 + ", sheetPart:"
-				+ sheetPart + ", input:" + input + "}";
+				+ sheetPart + ", input:" + input + ", type:" + type + ", corePrice:" + corePrice + ", price:" + price
+				+ "}";
 	}
 	public String getCategory() {
 		return category;
@@ -104,6 +105,30 @@ public class DataRow {
 	  String sheetSubCat2	=	null;
 	  String sheetPart	=	null;
 	  String input	=	null;
+	  
+	  
+	  String type=	null;
+	  String corePrice	=	null;
+	  String price=	null;
+	  
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getCorePrice() {
+		return corePrice;
+	}
+	public void setCorePrice(String corePrice) {
+		this.corePrice = corePrice;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 	public String getInput() {
 		return input;
 	}

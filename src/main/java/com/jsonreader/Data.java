@@ -16,6 +16,13 @@ public class Data {
 	  private String descriptionRetail;
 	  private Catalog catalog;
 	  private Images[] images;
+	  
+	  
+	  
+	  
+      
+      
+      
 	  public Catalog getCatalog() {
 		return catalog;
 	}

@@ -27,8 +27,8 @@ public class YearMakeModelReaderFromXLS {
 
     public static final String SAMPLE_XLS_FILE_PATH = "./sample-xls-file.xls";
     //public static final String SAMPLE_XLSX_FILE_PATH = "./sample-xlsx-file.xlsx";
-    //public static final String SAMPLE_XLSX_FILE_PATH = "D:/knowledgebase/myproject/twilio/documents/DataFull/File_V3.xlsx";
-    public static final String SAMPLE_XLSX_FILE_PATH = "/var/config/DataPul/conf/File_Part_1.xlsx";
+    //public static final String SAMPLE_XLSX_FILE_PATH = "D:/knowledgebase/myproject/twilio/documents/DataFull/Done/File_Part_2.xlsx";
+    public static final String SAMPLE_XLSX_FILE_PATH = "/var/config/DataPul/conf/File_Part_3.xlsx";
     public static void main(String[] args) {
     	YearMakeModelReaderFromXLS instance	=	new YearMakeModelReaderFromXLS();
     	try {
@@ -150,29 +150,29 @@ public class YearMakeModelReaderFromXLS {
     private static void printCellValue(Cell cell) {
         switch (cell.getCellTypeEnum()) {
             case BOOLEAN:
-                System.out.print(cell.getBooleanCellValue());
+                //System.out.print(cell.getBooleanCellValue());
                 break;
             case STRING:
-                System.out.print(cell.getRichStringCellValue().getString());
+                //System.out.print(cell.getRichStringCellValue().getString());
                 break;
             case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    System.out.print(cell.getDateCellValue());
+                    //System.out.print(cell.getDateCellValue());
                 } else {
-                    System.out.print(cell.getNumericCellValue());
+                    //System.out.print(cell.getNumericCellValue());
                 }
                 break;
             case FORMULA:
-                System.out.print(cell.getCellFormula());
+                //System.out.print(cell.getCellFormula());
                 break;
             case BLANK:
-                System.out.print("");
+                //System.out.print("");
                 break;
             default:
-                System.out.print("");
+                //System.out.print("");
         }
 
-        System.out.print("\t");
+        //System.out.print("\t");
     }
     
     public static YearMakeModelXLSDTO getData4Upload(Row row) {
@@ -193,17 +193,17 @@ public class YearMakeModelReaderFromXLS {
             	if(cell==null) {
             		logger.info("0: NULL CELL");
             	} else {
-                System.out.print("0: "+cell.getNumericCellValue());
+                //System.out.print("0: "+cell.getNumericCellValue());
                 root.setYear(new Double(cell.getNumericCellValue()).intValue());
             	}
                 break;
             case 1:
             	//CAR NAME
-                System.out.print("1: "+cell.getStringCellValue());
+                //System.out.print("1: "+cell.getStringCellValue());
                 root.setMake(cell.getStringCellValue());
                 break;
             case 2:
-            	System.out.print("2: "+cell);
+            	//System.out.print("2: "+cell);
             	try {
             		root.setModel(cell.getStringCellValue());
             	} catch (Exception e) {
@@ -219,7 +219,7 @@ public class YearMakeModelReaderFromXLS {
                 break;
             case 3:
             	//yearmakemodel_desc
-            	System.out.print(cell.getRichStringCellValue().getString());
+            	//System.out.print(cell.getRichStringCellValue().getString());
                 break;
             case 4:
             	//yearmakemodel
@@ -227,28 +227,28 @@ public class YearMakeModelReaderFromXLS {
                 break;
             case 5:
             	//input
-            	System.out.print(cell.getRichStringCellValue().getString());
+            	//System.out.print(cell.getRichStringCellValue().getString());
                 break;
             case 6:
             	//Category
             	
-                System.out.print("");
+                //System.out.print("");
                 break;
             case 7:
             	//Sub-Category
-                System.out.print("");
+                //System.out.print("");
                 break;
             case 8:
             	//Sub-Cat-2
-                System.out.print("");
+                //System.out.print("");
                 break;
             case 9:
             	//Part
-                System.out.print("");
+                //System.out.print("");
                 break;
 
             default:
-                System.out.print("");
+                //System.out.print("");
         }
             
         });
