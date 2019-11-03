@@ -123,11 +123,11 @@ public class BulkUpload {
     }
     
     
-    public static void bulkupload(String args1) {
+    public static void bulkupload(String args1,String qboxRestURL,String p_indexName) {
         long t = System.currentTimeMillis();
 
         URL url = null;
-        String urlStr	=	"https://3a7721e6.qb0x.com:30002/ymm/_bulk/";
+        String urlStr	=	qboxRestURL;
 //        try {
 //        	
 //            url = new URL(System.getenv("COMPOSE_ELASTICSEARCH_URL"));
@@ -156,7 +156,7 @@ public class BulkUpload {
                  .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider)));
 
         try {
-            String indexName="ymm";
+            String indexName=p_indexName;//"ymm";
             Response response = client.getLowLevelClient().performRequest("HEAD", "/" + indexName);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == 404) {
@@ -181,7 +181,8 @@ public class BulkUpload {
             String line;
 
             while((line=br.readLine())!=null) {
-                request.add(new IndexRequest(indexName,"_doc").source(line, XContentType.JSON));
+                //System.out.println(line);
+            	request.add(new IndexRequest(indexName,"_doc").source(line, XContentType.JSON));
                 count++;
                 if(count%batch==0) {
                     BulkResponse bulkresp = client.bulk(request);
@@ -197,20 +198,14 @@ public class BulkUpload {
                     request=new BulkRequest();
                 }
             }
-
-            if (request.numberOfActions() > 0) {
-                BulkResponse bulkresp = client.bulk(request);
-                if (bulkresp.hasFailures()) {
-                    for (BulkItemResponse bulkItemResponse : bulkresp) {
-                        if (bulkItemResponse.isFailed()) {
-                            BulkItemResponse.Failure failure = bulkItemResponse.getFailure();
-                            System.out.println("Error " + failure.toString());
-                        }
-                    }
-                }
-            }
-
-            System.out.println("Total uploaded: " + count);
+			/*
+			 * if (request.numberOfActions() > 0) { BulkResponse bulkresp =
+			 * client.bulk(request); if (bulkresp.hasFailures()) { for (BulkItemResponse
+			 * bulkItemResponse : bulkresp) { if (bulkItemResponse.isFailed()) {
+			 * BulkItemResponse.Failure failure = bulkItemResponse.getFailure();
+			 * System.out.println("Error " + failure.toString()); } } } }
+			 * 
+			 */            System.out.println("Total uploaded: " + count);
             client.close();
         } catch (IOException e) {
             e.printStackTrace();

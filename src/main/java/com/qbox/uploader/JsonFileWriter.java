@@ -18,10 +18,10 @@ public class JsonFileWriter {
 	public void writeFile2(String data) throws IOException {
 		
 	 
-		for (int i = 0; i < 10; i++) {
+//		for (int i = 0; i < 10; i++) {
 			fw.write(data);
 			fw.write('\n');
-		}
+//		}
 	 
 	}
 
