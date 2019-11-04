@@ -144,7 +144,7 @@ public class JSONFileCreator {
         workbook.close();
     }
 
-    public static void generateFile(String args1,String args2) throws IOException, InvalidFormatException {
+    public static void generateFile(String args1,String args2) throws IOException,Exception, InvalidFormatException {
 
     	
     	int recordAndDocId	=	1000;
@@ -214,6 +214,7 @@ public class JSONFileCreator {
         	//System.out.println("Object "+jsonString);
         
         }
+        jsonFileWriter.closFileWriter();
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
 
@@ -331,6 +332,7 @@ public class JSONFileCreator {
             case 5:
             	//input
             	System.out.print(cell.getRichStringCellValue().getString());
+            	root.setOutput(cell.getRichStringCellValue().getString());
                 break;
             case 6:
             	//Category
@@ -382,13 +384,13 @@ public class JSONFileCreator {
         suggest.setInput(input);
         for (String string : input) {
         	if(output.equals("")) {
-        		output	=	string;
+//        		output	=	string;
         	} else {
-        		output	=	output+" "+string;
+//        		output	=	output+" "+string;
         	}
 				
 		}
-        root.setOutput(output);
+//        root.setOutput(output);
         root.setSuggest(suggest);
         try {
         	jsonString = mapper.writeValueAsString(root);

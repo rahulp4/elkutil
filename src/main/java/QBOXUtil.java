@@ -4,9 +4,11 @@ public class QBOXUtil {
 
 	
 	public static void main(String[] args) {
-	    String JSON_FILE	=	"D:\\knowledgebase\\myproject\\twilio\\documents\\cloudsearch\\DataSet\\JSON\\JSONDataNov3.json";
+	    String JSON_FILE	=	"D:\\knowledgebase\\myproject\\DataSet\\JSON\\JSONDataNov4.json";
+	    String SAMPLE_XLSX_FILE_PATH = "D:\\knowledgebase\\myproject\\DataSet\\UploadToQBOX\\MASTER_DATA_SEARCH_3_NOV.xlsx";
+//	    String SAMPLE_XLSX_FILE_PATH = "D:\\knowledgebase\\myproject\\DataSet\\UploadToQBOX\\Sample.xlsx";
+//	    String JSON_FILE	=	"D:\\knowledgebase\\myproject\\DataSet\\JSON\\Sampleq.json";
 	    
-	    String SAMPLE_XLSX_FILE_PATH = "D:\\knowledgebase\\myproject\\twilio\\documents\\cloudsearch\\DataSet\\UploadToQBOX\\MASTER_DATA_SEARCH_3_NOV.xlsx";
 	    String qboxReSTURL	=	"https://3a7721e6.qb0x.com:30002/ymmv2/_bulk/";
 	    String p_indexName	=	"ymmv2";
 
