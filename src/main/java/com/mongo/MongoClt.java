@@ -63,6 +63,24 @@ public class MongoClt {
 		}
 	}
 	
+	public void insertDocToYMM(DataRow dataRow) throws Exception {
+		try {
+			DB db = mongo.getDB("eventstore");
+			DBCollection table = db.getCollection("MASTER_YEAR_MAKE_MODEL");
+			BasicDBObject document = new BasicDBObject();
+			document.put("make", dataRow.getSheetMakeStr());
+			document.put("model", dataRow.getSheetModelStr());
+			document.put("year", new Integer(dataRow.getSheetYearStr()).intValue());
+			table.insert(document);
+		} catch (DuplicateKeyException e) {
+			System.out.println("Ignore");
+	    } catch (Exception e) {
+			//e.printStackTrace();
+			System.out.println("Ignore Exception");
+		}
+	}
+
+	
 	public void getConnection(String args) {
 
 	    try {
@@ -71,10 +89,14 @@ public class MongoClt {
 	                .maxConnectionIdleTime((60 * 1_000))
 	                .maxConnectionLifeTime((120 * 1_000));
 	                ;
-	    	MongoClientURI uri1 = new MongoClientURI("mongodb://webuser:Donkey%40123@52.90.61.141:27017/eventstore", options);
-			MongoClientURI uri = new MongoClientURI(
-				    "mongodb+srv://admin_rahul:ILovePune2003@cluster0-mokax.mongodb.net/admin?retryWrites=true&w=majority");
-			mongo = new MongoClient(uri1);
+	                
+	        String atlasURI	=	"mongodb+srv://admin_rahul:ILovePune2003@cluster0-mokax.mongodb.net/admin?retryWrites=true&w=majority";	                
+	    	MongoClientURI uri1 = new MongoClientURI(atlasURI, options);
+			/*
+			 * MongoClientURI uri = new MongoClientURI(
+			 * "mongodb+srv://admin_rahul:ILovePune2003@cluster0-mokax.mongodb.net/admin?retryWrites=true&w=majority"
+			 * );
+			 */			mongo = new MongoClient(uri1);
 		
 	    } catch (MongoException e) {
 		e.printStackTrace();

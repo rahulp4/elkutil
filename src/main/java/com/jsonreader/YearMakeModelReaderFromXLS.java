@@ -32,12 +32,13 @@ public class YearMakeModelReaderFromXLS {
     public static void main(String[] args) {
     	YearMakeModelReaderFromXLS instance	=	new YearMakeModelReaderFromXLS();
     	try {
-    		List yearMakeModelList	=	instance.getYearMakeModelList();
+    		List<YearMakeModelXLSDTO> yearMakeModelList	=	instance.getYearMakeModelList();
     		logger.info(yearMakeModelList);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
     }
+    
     public List<YearMakeModelXLSDTO> getYearMakeModelList() throws IOException, InvalidFormatException {
     	int recordAndDocId	=	0;
     	
